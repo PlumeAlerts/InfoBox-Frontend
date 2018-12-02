@@ -13,15 +13,7 @@ class App extends React.Component {
             finishedLoading: false,
             theme: 'light',
             isVisible: true,
-            //TODO Temp data
-            data: {
-                title: "Twitter",
-                iconUrl: "https://localhost.rig.twitch.tv:8080/Twitter_Logo_Blue.svg",
-                url: "https://twitter.com/lclc98",
-                description: "Checkout my twitter",
-                duration: 10,
-                interval: 60,
-            }
+            data: false
         };
     }
 
@@ -41,11 +33,22 @@ class App extends React.Component {
         })
     }
 
+    clear() {
+        this.setState({data: false})
+    }
+
     componentDidMount() {
         if (this.twitch) {
             this.twitch.listen('broadcast', (target, contentType, body) => {
+                console.log(`New PubSub message!\n${target}\n${contentType}\n${body}`);
                 this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`);
-                this.props.setTimeout(this.setState({data: null}), this.state.data.duration)
+                try {
+                    const obj = JSON.parse(body);
+                    this.setState({data: obj});
+                    this.props.setTimeout(this.clear.bind(this), obj.duration * 1000)
+                } catch (ex) {
+                    console.error(ex);
+                }
 
             });
 
@@ -57,11 +60,6 @@ class App extends React.Component {
                 this.contextUpdate(context, delta)
             })
         }
-
-        this.props.setTimeout(() => {
-            this.setState({data: null})
-        }, this.state.data.duration * 1000)
-
     }
 
     componentWillUnmount() {
@@ -71,7 +69,7 @@ class App extends React.Component {
     }
 
     render() {
-        if (this.state.isVisible && this.state.data !== null) {
+        if (this.state.isVisible && this.state.data !== false) {
             return (
                 <a href={this.state.data.url} target="_blank">
                     <div className='media'>
