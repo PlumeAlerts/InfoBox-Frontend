@@ -1,6 +1,26 @@
 {
-    "presets": [
-        "env",
-        "react"
-    ]
+  "presets": [
+    "env",
+    "react"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "production": {
+      "presets": [
+        [
+          "minify",
+          {
+            "mangle": {
+              "keepFnName": true
+            },
+            "deadcode": {
+              "keepFnName": true
+            }
+          }
+        ]
+      ]
+    }
+  }
 }
