@@ -18,11 +18,6 @@ module.exports = (_env, argv) => {
             outputHtml: "config.html",
             build: true
         },
-        LiveConfig: {
-            path: "./src/LiveConfig.js",
-            outputHtml: "live_config.html",
-            build: true
-        },
     };
 
     let entry = {};

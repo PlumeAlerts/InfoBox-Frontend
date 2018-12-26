@@ -7,11 +7,7 @@ import InfoBox from "../../infobox/infobox";
 import brands from "../../../assets/data.json"
 let data = [];
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-const defaultInfoBoxes = {
+const defaultConfig = {
     info: [],
     interval: 15
 };
@@ -22,7 +18,7 @@ class ConfigContainer extends React.Component {
 
         this.state = {
             infoBoxes: {
-                ...defaultInfoBoxes,
+                ...defaultConfig,
                 ...this.props.infoBoxes,
             },
             tab: false,

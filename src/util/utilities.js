@@ -4,4 +4,14 @@ function rgbaToHex(rgba) {
     return "#" + rgbHex(rgba.r, rgba.g, rgba.b, rgba.a)
 }
 
-export { rgbaToHex}
+const defaultInfoBox = {
+    title: "Example text",
+    textSize: 4,
+    url: "https://example.com",
+    icon: "500px",
+    iconColor: "#FFF",
+    textColor: "#FFF",
+    backgroundColor: "#000",
+};
+
+export {rgbaToHex, defaultInfoBox}

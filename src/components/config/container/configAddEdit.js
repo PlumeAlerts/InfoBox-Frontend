@@ -2,7 +2,7 @@ import React from 'react'
 import Select from "react-select";
 import SketchPicker from "react-color/lib/Sketch";
 import InfoBox from "../../infobox/infobox";
-import {rgbaToHex} from '../../../util/utilities'
+import {rgbaToHex, defaultInfoBox} from '../../../util/utilities'
 
 const colourStyles = {
     control: styles => ({...styles, backgroundColor: 'white'}),
@@ -13,15 +13,6 @@ const colourStyles = {
         };
     },
 };
-const defaultInfoBox = {
-    title: "Example text",
-    textSize: "is-size-4",
-    url: "https://example.com",
-    icon: "500px",
-    iconColor: "#FFF",
-    textColor: "#FFF",
-    backgroundColor: "#000",
-};
 
 class ConfigAddEdit extends React.Component {
     constructor(props) {
@@ -31,7 +22,7 @@ class ConfigAddEdit extends React.Component {
             iconSelected: this.props.data[0],
             textSizeSelected: {
                 label: "Normal",
-                value: "is-size-4",
+                value: "4",
             },
 
             info: {
@@ -42,32 +33,31 @@ class ConfigAddEdit extends React.Component {
             sizes: [
                 {
                     label: "Largest",
-                    value: "is-size-1",
+                    value: "1",
                 },
                 {
                     label: "Larger",
-                    value: "is-size-2",
+                    value: "2",
                 },
                 {
                     label: "Large",
-                    value: "is-size-3",
+                    value: "3",
                 },
                 {
                     label: "Normal",
-                    value: "is-size-4",
+                    value: "4",
                 },
                 {
                     label: "Small",
-                    value: "is-size-5",
+                    value: "5",
                 },
                 {
                     label: "Smaller",
-
-                    value: "is-size-6",
+                    value: "6",
                 },
                 {
                     label: "Smallest",
-                    value: "is-size-7",
+                    value: "7",
                 }
             ]
         };

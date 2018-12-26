@@ -2,10 +2,13 @@ import React from 'react'
 
 import '../../assets/darkly.scss'
 import ConfigContainer from "./container/configContainer";
+import Authentication from "../../util/authentication";
 
 export default class ConfigPages extends React.Component {
     constructor(props) {
         super(props);
+
+        this.Authentication = new Authentication();
 
         this.twitch = window.Twitch ? window.Twitch.ext : null;
         this.state = {
@@ -26,13 +29,16 @@ export default class ConfigPages extends React.Component {
     componentDidMount() {
         // do config page setup as needed here
         if (this.twitch) {
-            this.twitch.onAuthorized((auth) => {
-                if (!this.state.finishedLoading) {
-                    this.setState(() => {
-                        return {finishedLoading: true}
+            this.twitch.onAuthorized((auth)=>{
+                this.Authentication.setToken(auth.token, auth.userId);
+                if(!this.state.finishedLoading){
+
+                    this.setState(()=>{
+                        return {finishedLoading:true}
                     })
                 }
-            });
+                console.log(this.Authentication)
+            })
 
             this.twitch.onContext((context, delta) => {
                 this.contextUpdate(context, delta)

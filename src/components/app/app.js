@@ -3,6 +3,7 @@ import ReactTimeout from 'react-timeout'
 
 import InfoBox from "../infobox/infobox";
 import '../../assets/darkly.scss'
+import {defaultInfoBox} from '../../util/utilities'
 
 class App extends React.Component {
     constructor(props) {
@@ -15,29 +16,7 @@ class App extends React.Component {
             theme: 'light',
             isVisible: true,
             // data: false
-            data: {
-                title: "Example text",
-                url: "https://example.com",
-                icon: {"value": "500px"},
-                iconColor: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1
-                },
-                textColor: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1
-                },
-                backgroundColor: {
-                    r: 0,
-                    g: 0,
-                    b: 0,
-                    a: 1
-                },
-            }
+            data: defaultInfoBox
         };
     }
 
