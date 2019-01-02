@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-// defines where the bundle file will live
+const Dotenv = require('dotenv-webpack');
 const bundlePath = path.resolve(__dirname, "dist/");
 
 module.exports = (_env, argv) => {
@@ -24,6 +23,9 @@ module.exports = (_env, argv) => {
 
     // edit webpack plugins here!
     let plugins = [
+        new Dotenv({
+            path: argv.mode === 'development' ? './.env.development' : './.env', // load this now instead of the ones in '.env.development'
+        }),
         new webpack.HotModuleReplacementPlugin()
     ];
 

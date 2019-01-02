@@ -81,7 +81,7 @@ export default class Authentication {
      * Returns a Promise with the Request() object per fetch documentation.
      *
      */
-    makeCall(url, method = "GET") {
+    makeCall(url, method = "GET", body = null) {
         return new Promise((resolve, reject) => {
             if (this.isAuthenticated()) {
                 let headers = {
@@ -93,6 +93,7 @@ export default class Authentication {
                     {
                         method,
                         headers,
+                        body
                     })
                     .then(response => resolve(response))
                     .catch(e => reject(e))

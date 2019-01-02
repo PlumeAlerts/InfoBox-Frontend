@@ -1,98 +1,145 @@
 import React from 'react'
 
 import '../../assets/darkly.scss'
-import ConfigContainer from "./container/configContainer";
+import ConfigAddEdit from "./container/configAddEdit";
+import InfoBox from "../infobox/infobox";
 import Authentication from "../../util/authentication";
 
-export default class ConfigPages extends React.Component {
+
+class ConfigPages extends React.Component {
     constructor(props) {
         super(props);
 
         this.Authentication = new Authentication();
-
         this.twitch = window.Twitch ? window.Twitch.ext : null;
-        this.state = {
-            finishedLoading: false,
-            light: true,
-            infoBoxes: []
-        }
-    }
 
-    contextUpdate(context, delta) {
-        if (delta.includes('theme')) {
-            this.setState(() => {
-                return {light: context.theme === "light"}
-            })
-        }
+        this.state = {
+            infoBoxes: [],
+            tab: false,
+
+            dirty: false,
+            editInfo: false,
+        };
     }
 
     componentDidMount() {
-        // do config page setup as needed here
         if (this.twitch) {
-            this.twitch.onAuthorized((auth)=>{
+            this.twitch.onAuthorized((auth) => {
                 this.Authentication.setToken(auth.token, auth.userId);
-                if(!this.state.finishedLoading){
-
-                    this.setState(()=>{
-                        return {finishedLoading:true}
+                this.Authentication.makeCall(`${process.env.REACT_APP_API_ENDPOINT}/config`).then(value => {
+                    value.json().then(content => {
+                        for (let i = 0; i < content.length; i++) {
+                            this.onAddInfo(content[i]);
+                        }
                     })
-                }
-                console.log(this.Authentication)
-            })
+                }).catch(reason => {
 
-            this.twitch.onContext((context, delta) => {
-                this.contextUpdate(context, delta)
-            });
-
-            this.twitch.configuration.onChanged(() => {
-                console.log("config")
-
-                let config = this.twitch.configuration.broadcaster ? this.twitch.configuration.broadcaster.content : [];
-                try {
-                    config = JSON.parse(config)
-                } catch (e) {
-                    config = []
-                }
-                console.log(config);
-
-                this.setState(() => {
-                    return {
-                        infoBoxes: config
-                    }
                 })
-            })
+            });
         }
     }
 
-    saveConfig(infoBoxes) {
-        this.twitch.configuration.set('broadcaster', '0.0.1', JSON.stringify(infoBoxes));
-        console.log(JSON.stringify(infoBoxes));
-        console.log(infoBoxes)
+    onAddInfo(data) {
+        this.setState({editInfo: false});
+
         this.setState(prevState => {
+            let infoBoxes = prevState.infoBoxes;
+            infoBoxes.push(data);
             return {
                 infoBoxes
             }
-        })
+        });
     }
 
+
+    onEditInfo(data) {
+        this.setState({editInfo: false});
+
+        this.setState(prevState => {
+            let infoBoxes = prevState.infoBoxes;
+            let objIndex = infoBoxes.findIndex((obj => obj.id === data.id));
+            infoBoxes[objIndex] = data;
+            return {
+                infoBoxes
+            }
+        });
+    }
+
+    onDeleteInfo(data) {
+        this.Authentication.makeCall(`${process.env.REACT_APP_API_ENDPOINT}/config?id=${data.id}`, "DELETE", JSON.stringify(data))
+            .then(value => {
+                this.setState(prevState => {
+                    let infoBoxes = prevState.infoBoxes;
+                    infoBoxes = infoBoxes.filter((obj => obj.id !== data.id));
+                    return {
+                        infoBoxes
+                    }
+                });
+            });
+    }
 
     render() {
-        if (this.state.finishedLoading) {
-            return (
-                <div>
-                    <ConfigContainer light={this.state.light}
-                                     infoBoxes={this.state.infoBoxes}
-                                     saveConfig={(info) => this.saveConfig(info)}/>
-                </div>
-            )
-        } else {
-            return (
-                <div className="Config">
-                    <div className={this.state.light ? 'Config-light' : 'Config-dark'}>
-                        Loading...
+        const that = this;
+        return (
+            <div>
+                <nav className="level">
+                    <div className="level-left">
+                        <div className="level-item">
+                            <h1 className="title is-3">InfoBoxes</h1>
+                        </div>
                     </div>
-                </div>
-            )
-        }
+                    <div className="level-right">
+                        <p className="level-item">
+                            {
+                                !this.state.editInfo ?
+                                    <a className="button is-link"
+                                       onClick={(e) => this.setState({
+                                           editInfo: (
+                                               <ConfigAddEdit onAddInfo={(e) => this.onAddInfo(e)}/>)
+                                       })}>
+                                        Add
+                                    </a>
+                                    : null
+                            }
+                        </p>
+                    </div>
+                </nav>
+                <hr/>
+                {
+                    this.state.editInfo ? this.state.editInfo : (
+                        <div>
+                            {this.state.infoBoxes.map(function (info, index) {
+                                return (
+                                    <div key={index} className="columns">
+                                        <div className="column is-one-third">
+                                            <InfoBox info={info}/>
+                                        </div>
+                                        <div className="column is-one-third"/>
+                                        <div className="column is-one-third">
+                                            <a className="button is-link"
+                                               onClick={(e) => that.setState({
+                                                   editInfo: (
+                                                       <ConfigAddEdit info={info}
+                                                                      onEditInfo={(e) => that.onEditInfo(e)}/>)
+                                               })}>
+                                                Edit
+                                            </a>
+                                            <br/>
+                                            <br/>
+                                            <a className="button is-link"
+                                               onClick={(e) => that.onDeleteInfo(info)}>
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )
+                }
+            </div>
+        )
     }
 }
+
+export default ConfigPages

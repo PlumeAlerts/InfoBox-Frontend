@@ -21,7 +21,7 @@ class InfoBox extends React.Component {
                             <div className={"content is-size-" + this.props.info.textSize}
                                  style={{color: this.props.info.textColor}}>
                                 {
-                                    this.props.info.title
+                                    this.props.info.text
                                 }
                             </div>
                         </div>
