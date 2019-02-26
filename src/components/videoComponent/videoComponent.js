@@ -65,7 +65,7 @@ class VideoComponent extends React.Component {
     }
 
     render() {
-        if (this.state.isVisible && this.state.annotation !== undefined) {
+        if (this.state.isVisible && this.state.annotation !== false) {
             return (
                 <Annotation annotation={this.state.annotation}/>
             )
