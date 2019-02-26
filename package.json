@@ -5,9 +5,21 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "bulma": "^0.7.4",
+    "dotenv-webpack": "^1.7.0",
+    "jsonwebtoken": "^8.4.0",
+    "rc-input-number": "^4.3.9",
+    "react": "^16.8.1",
+    "react-color": "^2.17.0",
+    "react-dom": "^16.8.1",
+    "react-redux": "^6.0.1",
+    "react-select": "^2.3.0",
+    "react-timeout": "^1.1.2",
+    "redux": "^4.0.1",
+    "redux-devtools": "^3.5.0",
+    "rgb-hex": "^2.1.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -24,20 +36,5 @@
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
-    "bulma": "^0.7.4",
-    "dotenv-webpack": "^1.7.0",
-    "jsonwebtoken": "^8.4.0",
-    "rc-input-number": "^4.3.9",
-    "react": "^16.8.1",
-    "react-color": "^2.17.0",
-    "react-dom": "^16.8.1",
-    "react-redux": "^6.0.1",
-    "react-select": "^2.3.0",
-    "react-timeout": "^1.1.2",
-    "redux": "^4.0.1",
-    "redux-devtools": "^3.5.0",
-    "rgb-hex": "^2.1.0"
   }
 }
