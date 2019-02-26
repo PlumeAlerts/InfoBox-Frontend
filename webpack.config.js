@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 const webpack = require("webpack");
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const bundlePath = path.resolve(__dirname, "dist/");
@@ -26,6 +27,7 @@ module.exports = (_env, argv) => {
         new Dotenv({
             path: argv.mode === 'development' ? './.env.development' : './.env', // load this now instead of the ones in '.env.development'
         }),
+        new CleanWebpackPlugin(['dist']),
         new webpack.HotModuleReplacementPlugin()
     ];
 
@@ -63,7 +65,7 @@ module.exports = (_env, argv) => {
                     test: /\.(js|jsx)$/,
                     exclude: /(node_modules|bower_components)/,
                     loader: 'babel-loader',
-                    options: {presets: ['env']}
+                    options: { presets: ['env', 'react'] }
                 },
                 {
                     test: /\.css$/,
@@ -88,11 +90,7 @@ module.exports = (_env, argv) => {
     if (argv.mode === 'development') {
         config.devServer = {
             contentBase: path.join(__dirname, 'public'),
-            host: argv.devrig ? 'localhost.rig.twitch.tv' : 'localhost',
-            https: {
-                key: fs.readFileSync(path.resolve(__dirname, 'conf/server.key')),
-                cert: fs.readFileSync(path.resolve(__dirname, 'conf/server.crt'))
-            },
+            host: 'localhost',
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },

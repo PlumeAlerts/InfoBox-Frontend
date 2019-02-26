@@ -1,22 +1,19 @@
 import React from 'react'
 import ReactTimeout from 'react-timeout'
 
-import InfoBox from "../infobox/infobox";
-import '../../assets/darkly.scss'
-import {defaultInfoBox} from '../../util/utilities'
+import Annotation from "../annotation/annotation";
+import {defaultAnnotation} from '../../util/utilities'
 
 class VideoComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        //if the extension is running on twitch or dev rig, set the shorthand here. otherwise, set to null. 
         this.twitch = window.Twitch ? window.Twitch.ext : null;
         this.state = {
             finishedLoading: false,
             theme: 'light',
             isVisible: true,
-            // data: false
-            data: defaultInfoBox
+            annotation: defaultAnnotation
         };
     }
 
@@ -37,7 +34,7 @@ class VideoComponent extends React.Component {
     }
 
     clear() {
-        this.setState({data: false})
+        this.setState({annotation: false})
     }
 
     componentDidMount() {
@@ -47,12 +44,11 @@ class VideoComponent extends React.Component {
                 this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`);
                 try {
                     const obj = JSON.parse(body);
-                    this.setState({data: obj});
-                    this.props.setTimeout(this.clear.bind(this), obj.duration * 1000)
+                    this.setState({annotation: obj});
+                    this.props.setTimeout(this.clear.bind(this), 15 * 1000)
                 } catch (ex) {
                     console.error(ex);
                 }
-
             });
 
             this.twitch.onVisibilityChanged((isVisible, _c) => {
@@ -72,14 +68,13 @@ class VideoComponent extends React.Component {
     }
 
     render() {
-        // if (this.state.isVisible && this.state.data !== false) {
-        return (
-            <InfoBox info={this.state.data}/>
-        )
-        // } else {
-        //     return null
-        // }
-
+        if (this.state.isVisible && this.state.annotation !== undefined) {
+            return (
+                <Annotation annotation={this.state.annotation}/>
+            )
+        } else {
+            return null
+        }
     }
 }
 

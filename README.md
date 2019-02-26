@@ -1,1 +1,1 @@
-# InfoBox-Frontend
+# Stream Annotations Frontend

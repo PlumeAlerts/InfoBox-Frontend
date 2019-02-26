@@ -4,8 +4,8 @@ function rgbaToHex(rgba) {
     return "#" + rgbHex(rgba.r, rgba.g, rgba.b, rgba.a)
 }
 
-const defaultInfoBox = {
-    id: -1,
+const defaultAnnotation = {
+    id: 0,
     text: "Example text",
     textSize: 4,
     url: "https://example.com",
@@ -16,4 +16,4 @@ const defaultInfoBox = {
     intervals: 15
 };
 
-export {rgbaToHex, defaultInfoBox}
+export {rgbaToHex, defaultAnnotation}
