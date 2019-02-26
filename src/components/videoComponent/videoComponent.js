@@ -2,7 +2,6 @@ import React from 'react'
 import ReactTimeout from 'react-timeout'
 
 import Annotation from "../annotation/annotation";
-import {defaultAnnotation} from '../../util/utilities'
 
 class VideoComponent extends React.Component {
     constructor(props) {
@@ -13,7 +12,7 @@ class VideoComponent extends React.Component {
             finishedLoading: false,
             theme: 'light',
             isVisible: true,
-            annotation: defaultAnnotation
+            annotation: false
         };
     }
 
@@ -40,8 +39,6 @@ class VideoComponent extends React.Component {
     componentDidMount() {
         if (this.twitch) {
             this.twitch.listen('broadcast', (target, contentType, body) => {
-                console.log(`New PubSub message!\n${target}\n${contentType}\n${body}`);
-                this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`);
                 try {
                     const obj = JSON.parse(body);
                     this.setState({annotation: obj});
