@@ -16,7 +16,7 @@
     "react-redux": "^6.0.1",
     "react-select": "^2.3.0",
     "react-timeout": "^1.1.2",
-    "redux": "^4.0.1",
+    "redux": "^4.0.4",
     "redux-devtools": "^3.5.0",
     "rgb-hex": "^2.1.0"
   },
