@@ -6,7 +6,7 @@
     "start": "webpack-dev-server --mode development"
   },
   "dependencies": {
-    "bulma": "^0.7.4",
+    "bulma": "^0.7.5",
     "dotenv-webpack": "^1.7.0",
     "jsonwebtoken": "^8.4.0",
     "rc-input-number": "^4.5.0",
