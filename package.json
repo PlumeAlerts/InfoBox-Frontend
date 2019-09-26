@@ -18,7 +18,7 @@
     "react-timeout": "^1.1.2",
     "redux": "^4.0.4",
     "redux-devtools": "^3.5.0",
-    "rgb-hex": "^2.1.0"
+    "rgb-hex": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
