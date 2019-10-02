@@ -1,0 +1,153 @@
+// Overrides
+hr {
+  height: $border-width;
+}
+
+h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+a {
+  transition: all 200ms ease;
+}
+
+.button {
+  transition: all 200ms ease;
+  border-width: $border-width;
+  color: $white;
+
+  &.is-active,
+  &.is-focused,
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($button-focus-border-color, 0.5);
+  }
+
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+    $color-invert: nth($pair, 2);
+
+    &.is-#{$name} {
+      &.is-hovered,
+      &:hover {
+        background-color: lighten($color, 7.5%);
+      }
+
+      &.is-active,
+      &.is-focused,
+      &:active,
+      &:focus {
+        border-color: $color;
+        box-shadow: 0 0 0 2px rgba($color, 0.5);
+      }
+    }
+  }
+}
+
+.label {
+  color: $grey-lighter;
+}
+
+.button,
+.control.has-icons-left .icon,
+.control.has-icons-right .icon,
+.input,
+.select,
+.select select,
+.textarea {
+  height: 2.5em;
+}
+
+.input,
+.textarea {
+  transition: all 200ms ease;
+  box-shadow: none;
+  border-width: $border-width;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.select {
+  &:after,
+  select {
+    border-width: $border-width;
+  }
+}
+
+.control {
+  &.has-addons {
+    .button,
+    .input,
+    .select {
+      margin-right: -$border-width;
+    }
+  }
+}
+
+.card {
+  $card-border-color: lighten($grey-darker, 5);
+  box-shadow: none;
+  border: $border-width solid $card-border-color;
+  background-color: $grey-darker;
+  border-radius: $radius;
+
+  .card-image {
+    img {
+      border-radius: $radius $radius 0 0;
+    }
+  }
+
+  .card-header {
+    box-shadow: none;
+    background-color: rgba($black-bis, 0.2);
+    border-radius: $radius $radius 0 0;
+  }
+
+  .card-footer {
+    background-color: rgba($black-bis, 0.2);
+  }
+
+  .card-footer,
+  .card-footer-item {
+    border-width: $border-width;
+    border-color: $card-border-color;
+  }
+}
+
+.tabs {
+  a {
+    border-bottom-width: $border-width;
+    margin-bottom: -$border-width;
+  }
+
+  ul {
+    border-bottom-width: $border-width;
+  }
+
+  &.is-boxed {
+    a {
+      border-width: $border-width;
+    }
+
+    li.is-active a {
+      background-color: darken($grey-darker, 4);
+    }
+  }
+
+  &.is-toggle {
+    li a {
+      border-width: $border-width;
+      margin-bottom: 0;
+    }
+
+    li + li {
+      margin-left: -$border-width;
+    }
+  }
+}
+
+.is-vertical-center {
+  display: flex;
+  align-items: center;
+}

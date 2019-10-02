@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./components/App/App"
+import VideoComponent from "./components/videoComponent/videoComponent"
 
+import './assets/darkly_vc.scss'
 ReactDOM.render(
-    <App/>,
+    <VideoComponent/>,
     document.getElementById("root")
 );

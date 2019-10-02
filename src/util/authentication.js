@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 /**
  * Helper class for authentication against an EBS service. Allows the storage of a token to be accessed across componenents.
@@ -12,7 +12,6 @@ export default class Authentication {
             opaque_id,
             user_id: false,
             isMod: false,
-            isBroadcaster: false,
             role: ""
         }
     }
@@ -22,14 +21,10 @@ export default class Authentication {
     }
 
     // This does guarantee the user is a moderator- this is fairly simple to bypass - so pass the JWT and verify
-    // server-side that this is true. This, however, allows you to render client-side UI for users without holding on a backend to verify the JWT. 
-    // Additionally, this will only show if the user shared their ID, otherwise it will return false. 
+    // server-side that this is true. This, however, allows you to render client-side UI for users without holding on a backend to verify the JWT.
+    // Additionally, this will only show if the user shared their ID, otherwise it will return false.
     isModerator() {
         return this.state.isMod
-    }
-
-    isBroadcaster() {
-        return this.state.isBroadcaster
     }
 
     // similar to mod status, this isn't always verifiable, so have your backend verify before proceeding.
@@ -46,19 +41,15 @@ export default class Authentication {
     }
 
     // set the token in the Authentication componenent state
-    // this is naive, and will work with whatever token is returned. under no circumstances should you use this logic to trust private data- you should always verify the token on the backend before displaying that data. 
+    // this is naive, and will work with whatever token is returned. under no circumstances should you use this logic to trust private data- you should always verify the token on the backend before displaying that data.
     setToken(token, opaque_id) {
         let isMod = false;
-        let isBroadcaster = false;
         let role = "";
         let user_id = "";
 
         try {
             let decoded = jwt.decode(token);
 
-            if (decoded.role === 'broadcaster') {
-                isBroadcaster = true
-            }
             if (decoded.role === 'broadcaster' || decoded.role === 'moderator') {
                 isMod = true
             }
@@ -73,7 +64,6 @@ export default class Authentication {
         this.state = {
             token,
             opaque_id,
-            isBroadcaster,
             isMod,
             user_id,
             role
@@ -82,7 +72,7 @@ export default class Authentication {
 
     // checks to ensure there is a valid token in the state
     isAuthenticated() {
-        return this.state.token && this.state.opaque_id;
+        return this.state.token && this.state.opaque_id
     }
 
     /**
@@ -91,8 +81,7 @@ export default class Authentication {
      * Returns a Promise with the Request() object per fetch documentation.
      *
      */
-
-    makeCall(url, method = "GET") {
+    makeCall(url, method = "GET", body = null) {
         return new Promise((resolve, reject) => {
             if (this.isAuthenticated()) {
                 let headers = {
@@ -104,6 +93,7 @@ export default class Authentication {
                     {
                         method,
                         headers,
+                        body
                     })
                     .then(response => resolve(response))
                     .catch(e => reject(e))
