@@ -9,7 +9,7 @@
     "bulma": "^0.7.5",
     "dotenv-webpack": "^1.7.0",
     "jsonwebtoken": "^8.5.1",
-    "rc-input-number": "^4.5.0",
+    "rc-input-number": "^4.5.1",
     "react": "^16.10.2",
     "react-color": "^2.17.3",
     "react-dom": "^16.10.2",
