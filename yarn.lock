@@ -5394,10 +5394,10 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-rc-input-number@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/rc-input-number/-/rc-input-number-4.5.1.tgz#fcb03c1dda8b7b2a69fbb718f9c13c666caebd79"
-  integrity sha512-grO7/Lau7iv3NyHVyCajE1LuGLqGkG1tEAAZSwm9M0esYfrwXVSip4qhb5sF+8g6ACsiI20sOVLIihXuhSoifA==
+rc-input-number@^4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/rc-input-number/-/rc-input-number-4.5.3.tgz#ed497c727658e870d3f2a5e5a750d1ee71089f43"
+  integrity sha512-jBwxX5KDkp2nHOaEoMQ1mZBwWpmmGUuHXF/qralpmN+wDp8rlB6Xvr9d7AHgmzGZhbWIMyLeq6ET6HDDCCjvAA==
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.0"
